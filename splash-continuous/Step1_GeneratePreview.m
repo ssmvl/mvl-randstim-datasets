@@ -11,7 +11,7 @@ stimCompFile = 'stimulus-components.mat';
 %    directory. If you want to generate a new set of images, please use any
 %    random seed of your choice, or uncomment "rng('shuffle');" below.
 %
-rngSeed = typecast(uint8('L&@x'), 'uint32');
+rngSeed = typecast(uint8('LVtD'), 'uint32');
 rng(rngSeed, 'twister');
 %rng('shuffle');
 
@@ -39,8 +39,9 @@ wDim2 = zeros(1, stimTpl.radialRes);
 wDim2(midFw + idxFp(idxD2p)) = 1;
 wDim2(midFw - idxFp(idxD2p)) = 1;
 
-compAt = @(d1, d2) compA .* (wDim1 * d1 + wDim2 * d2) + ...
-	compB .* (wDim1 * (1 - d1) + wDim2 * (1- d2));
+compAt = @(d1, d2) ...
+	compA .* (wDim1 * (d1 - 0.5)) + (compB .* wDim1 * 0.5) + ...
+	compB .* (wDim2 * (d2 - 0.5)) + (compA .* wDim2 * 0.5);
 splashStim = @(d1, d2) splashImg(compAt(d1, d2), stimTpl);
 save(stimCompFile, 'wDim1', 'wDim2', 'compA', 'compB', ...
 	'compAt', 'splashStim', 'stimTpl');

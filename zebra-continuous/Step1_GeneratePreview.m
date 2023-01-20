@@ -12,7 +12,7 @@ stimCompFile = 'stimulus-components.mat';
 %    directory. If you want to generate a new set of images, please use any
 %    random seed of your choice, or uncomment "rng('shuffle');" below.
 %
-rngSeed = typecast(uint8('0Y#r'), 'uint32');
+rngSeed = typecast(uint8('4J^7'), 'uint32');
 rng(rngSeed, 'twister');
 %rng('shuffle');
 
@@ -37,8 +37,9 @@ wDim2(midFw, midFw) = 0.5;
 
 compA = zebraComp(stimTpl);
 compB = zebraComp(stimTpl);
-compAt = @(d1, d2) compA .* (wDim1 * d1 + wDim2 * d2) + ...
-	compB .* (wDim1 * (1 - d1) + wDim2 * (1- d2));
+compAt = @(d1, d2) ...
+	compA .* (wDim1 * (d1 - 0.5)) + (compB .* wDim1 * 0.5) + ...
+	compB .* (wDim2 * (d2 - 0.5)) + (compA .* wDim2 * 0.5);
 zebraStim = @(d1, d2) zebraImg(compAt(d1, d2), stimTpl);
 save(stimCompFile, 'wDim1', 'wDim2', 'compA', 'compB', ...
 	'compAt', 'zebraStim', 'stimTpl');
