@@ -4,8 +4,8 @@ dataset.circularDimSteps = 180;
 dataset.planarDimSteps   = 40;
 
 % preview image properties
-preview.steps  = 4;
-preview.imSize = 500;
+preview.steps  = 9;
+preview.imSize = 720;
 
 % image size
 stimTpl.imSize = 500;
